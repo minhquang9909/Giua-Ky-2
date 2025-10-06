@@ -34,22 +34,26 @@ function NavBar({ search, setSearch }) {
           onFocus={() => {
             setShowDropdown(true)
           }}
-          onBlur={() => setTimeout(() => setShowDropdown(false), 150)}
+          onBlur={() => setTimeout(() => setShowDropdown(false), 1)}
           className="border-none rounded-[37px] px-3 py-2 bg-[#374151] text-white w-100 h-12"
         />
 
-        {showDropdown && movieList.length > 0 && (
-          <ul className="absolute right-0 mt-0 w-100 max-h-60 overflow-auto rounded-md bg-[#0f1720] border border-gray-700 shadow-lg z-50">
-            {movieList.map((item) => (
-              <li
-                key={item.id}
-                onMouseDown={() => onSelect(item)}
-                className="px-4 py-2 cursor-pointer hover:bg-gray-800 text-white"
-                style={{ backgroundImage: `url(${item.image})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center', backgroundColor: '#374151', backgroundBlendMode: 'multiply' }}
-              >
-                {item.movieName}
-              </li>
-            ))}
+        {showDropdown && (
+          <ul className="absolute right-0 mt-1 w-100 max-h-60 overflow-auto rounded-md bg-[#0f1720] border border-gray-700 shadow-lg z-50">
+            {movieList
+              .filter((item) =>
+                item.movieName.toLowerCase().includes(searchText.trim().toLowerCase())
+              )
+              .map((item) => (
+                <li
+                  key={item.id}
+                  onMouseDown={() => onSelect(item)}
+                  className="px-4 py-2 cursor-pointer hover:bg-gray-800 text-white"
+                  style={{ backgroundImage: `url(${item.image})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center', backgroundColor: '#374151', backgroundBlendMode: 'multiply' }}
+                >
+                  {item.movieName}
+                </li>
+              ))}
           </ul>
         )}
       </div>
